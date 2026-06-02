@@ -10,24 +10,23 @@ export default function SuperAdmin() {
   const [shops, setShops] = useState<Shop[]>([]);
   const [loading, setLoading] = useState(false);
 
-  // Login form
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginLoading, setLoginLoading] = useState(false);
 
-  // Shop form
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({ shopName: "", ownerName: "", email: "", phone: "", address: "", adminPassword: "", subscriptionEndDate: "" });
   const [submitting, setSubmitting] = useState(false);
 
-  // Reset password
   const [resetId, setResetId] = useState<number | null>(null);
   const [newPassword, setNewPassword] = useState("");
+
+  const API = import.meta.env.VITE_API_URL;
 
   const fetchShops = async (t: string) => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/api/super-admin/shops", {
+      const res = await fetch(`${API}/super-admin/shops`, {
         headers: { Authorization: `Bearer ${t}` },
       });
       const data = await res.json();
@@ -58,7 +57,7 @@ export default function SuperAdmin() {
     }
     setSubmitting(true);
     try {
-      const res = await fetch("http://localhost:5000/api/super-admin/shops", {
+      const res = await fetch(`${API}/super-admin/shops`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify(form),
@@ -76,7 +75,7 @@ export default function SuperAdmin() {
 
   const handleStatusChange = async (id: number, status: "ACTIVE" | "SUSPENDED" | "EXPIRED") => {
     try {
-      await fetch(`http://localhost:5000/api/super-admin/shops/${id}/status`, {
+      await fetch(`${API}/super-admin/shops/${id}/status`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ status }),
@@ -89,7 +88,7 @@ export default function SuperAdmin() {
   const handleResetPassword = async () => {
     if (!resetId || !newPassword || newPassword.length < 6) return toast.error("Mot de passe trop court");
     try {
-      await fetch(`http://localhost:5000/api/super-admin/shops/${resetId}/reset-password`, {
+      await fetch(`${API}/super-admin/shops/${resetId}/reset-password`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ newPassword }),
@@ -103,7 +102,7 @@ export default function SuperAdmin() {
   const handleDelete = async (id: number) => {
     if (!confirm("Supprimer cette boutique définitivement ?")) return;
     try {
-      await fetch(`http://localhost:5000/api/super-admin/shops/${id}`, {
+      await fetch(`${API}/super-admin/shops/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -118,7 +117,6 @@ export default function SuperAdmin() {
     EXPIRED: "bg-red-100 text-red-700",
   };
 
-  // Page login super admin
   if (!token) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-slate-100 px-4">
@@ -157,7 +155,6 @@ export default function SuperAdmin() {
   return (
     <div className="min-h-screen bg-slate-50 px-4 py-8">
       <div className="mx-auto max-w-6xl space-y-6">
-        {/* Header */}
         <div className="flex items-center justify-between rounded-2xl bg-white px-6 py-4 shadow-sm">
           <div className="flex items-center gap-3">
             <img src={logo} alt="Jokko Business" className="h-10 w-10 rounded-xl bg-slate-50 p-1 object-contain" />
@@ -178,7 +175,6 @@ export default function SuperAdmin() {
           </div>
         </div>
 
-        {/* Stats rapides */}
         <div className="grid grid-cols-3 gap-4">
           {[
             { label: "Total boutiques", value: shops.length },
@@ -192,7 +188,6 @@ export default function SuperAdmin() {
           ))}
         </div>
 
-        {/* Formulaire nouvelle boutique */}
         {showForm && (
           <div className="rounded-2xl bg-white p-6 shadow-sm">
             <div className="flex items-center justify-between mb-4">
@@ -235,7 +230,6 @@ export default function SuperAdmin() {
           </div>
         )}
 
-        {/* Reset password modal */}
         {resetId && (
           <div className="rounded-2xl bg-white p-6 shadow-sm border border-yellow-200">
             <div className="flex items-center justify-between mb-4">
@@ -253,7 +247,6 @@ export default function SuperAdmin() {
           </div>
         )}
 
-        {/* Liste boutiques */}
         {loading ? (
           <div className="rounded-2xl bg-white p-8 text-center text-gray-400">Chargement...</div>
         ) : !shops.length ? (

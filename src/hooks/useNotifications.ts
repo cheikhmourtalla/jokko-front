@@ -34,7 +34,7 @@ export function useNotifications() {
       eventSourceRef.current.close();
     }
 
-    const url = `http://localhost:5000/api/notifications/stream`;
+    const url = `http://${import.meta.env.VITE_API_URL}st:5000/api/notifications/stream`;
 
     // EventSource ne supporte pas les headers — on passe le token en query param
     const es = new EventSource(`${url}?token=${token}`);
