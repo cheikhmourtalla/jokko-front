@@ -1,8 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
-});
+baseURL: "https://jokko-back.onrender.com/api"});
 
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
@@ -11,7 +10,7 @@ api.interceptors.request.use((config) => {
 });
 
 api.interceptors.response.use(
-  (response) => response,
+  (r) => r,
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem("token");
