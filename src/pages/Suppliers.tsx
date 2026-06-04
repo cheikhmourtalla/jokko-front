@@ -127,7 +127,7 @@ export default function Suppliers() {
           <div className="flex items-center gap-3">
             <span className="text-2xl">🔒</span>
             <div>
-              <p className="font-semibold text-red-800">Caisse fermée — Paiements bloqués</p>
+              <p className="font-semibold text-red-800">Caisse fermée</p>
               <p className="text-sm text-red-600 mt-0.5">Ouvrez la caisse pour payer vos fournisseurs.</p>
             </div>
           </div>

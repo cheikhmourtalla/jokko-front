@@ -29,14 +29,11 @@ export function useNotifications() {
     const token = localStorage.getItem("token");
     if (!token) return;
 
-    // Fermer la connexion précédente si elle existe
     if (eventSourceRef.current) {
       eventSourceRef.current.close();
     }
 
-    const url = `http://${import.meta.env.VITE_API_URL}st:5000/api/notifications/stream`;
-
-    // EventSource ne supporte pas les headers — on passe le token en query param
+   const url = `https://jokko-back.onrender.com/api/notifications/stream`;
     const es = new EventSource(`${url}?token=${token}`);
     eventSourceRef.current = es;
 
@@ -57,7 +54,6 @@ export function useNotifications() {
     es.onerror = () => {
       setConnected(false);
       es.close();
-      // Reconnexion automatique après 5 secondes
       reconnectTimerRef.current = setTimeout(() => {
         connect();
       }, 5000);

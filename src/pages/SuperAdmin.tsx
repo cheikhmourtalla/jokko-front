@@ -21,8 +21,7 @@ export default function SuperAdmin() {
   const [resetId, setResetId] = useState<number | null>(null);
   const [newPassword, setNewPassword] = useState("");
 
-  const API = import.meta.env.VITE_API_URL;
-
+  const API = "https://jokko-back.onrender.com/api";
   const fetchShops = async (t: string) => {
     setLoading(true);
     try {

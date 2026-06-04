@@ -9,13 +9,13 @@ import logo from "../assets/logo.svg";
 
 const allLinks = [
   { name: "Tableau de bord", path: "/",         icon: LayoutDashboard, adminOnly: false },
-  { name: "Caisse",          path: "/cash",      icon: Wallet,          adminOnly: false },
   { name: "Produits",        path: "/products",  icon: Package,         adminOnly: false },
   { name: "Clients",         path: "/clients",   icon: Users,           adminOnly: false },
   { name: "Fournisseurs",    path: "/suppliers", icon: Truck,           adminOnly: false },
   { name: "Stock",           path: "/stock",     icon: Boxes,           adminOnly: false },
   { name: "Ventes",          path: "/sales",     icon: ShoppingCart,    adminOnly: false },
   { name: "Factures",        path: "/invoices",  icon: FileText,        adminOnly: false },
+  { name: "Caisse",          path: "/cash",      icon: Wallet,          adminOnly: false },
   { name: "Utilisateurs",    path: "/users",     icon: UserCog,         adminOnly: true  },
   { name: "Paramètres",      path: "/settings",  icon: Settings,        adminOnly: true  },
 ];
@@ -37,8 +37,8 @@ function SidebarContent({ onClose }: { onClose?: () => void }) {
   }, []);
 
   return (
-    <div className="flex h-full flex-col bg-slate-900 text-white">
-      <div className="border-b border-white/10 px-5 py-5">
+    <div className="flex h-full flex-col text-white" style={{background: "#1e3a5f"}}>
+      <div className="border-b border-blue-900/50 px-5 py-5">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             {shopLogo ? (
@@ -68,7 +68,7 @@ function SidebarContent({ onClose }: { onClose?: () => void }) {
             <NavLink key={link.path} to={link.path} onClick={onClose} end={link.path === "/"}
               className={({ isActive }) =>
                 `group flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium transition ${
-                  isActive ? "bg-white text-slate-900" : "text-white/70 hover:bg-white/10 hover:text-white"
+                  isActive ? "bg-blue-500 text-white" : "text-white/70 hover:bg-white/20 hover:text-white"
                 }`
               }>
               <div className="flex items-center gap-3">
@@ -81,8 +81,8 @@ function SidebarContent({ onClose }: { onClose?: () => void }) {
         })}
       </nav>
 
-      <div className="border-t border-white/10 p-4">
-        <div className="rounded-xl bg-white/5 px-4 py-3">
+      <div className="border-t border-blue-900/50 p-4">
+        <div className="rounded-xl px-4 py-3" style={{background: "rgba(255,255,255,0.07)"}}>
           <p className="text-xs font-semibold text-white/80">v1.0</p>
           <p className="text-xs text-white/40">Jokko Business SaaS</p>
         </div>
@@ -96,7 +96,7 @@ export default function Sidebar() {
   return (
     <>
       <button type="button" onClick={() => setMobileOpen(true)}
-        className="fixed left-4 top-4 z-40 rounded-xl bg-slate-900 p-3 text-white shadow-lg md:hidden">
+        className="fixed left-4 top-4 z-40 rounded-xl p-3 text-white shadow-lg md:hidden" style={{background: "#1e3a5f"}}>
         <Menu size={20} />
       </button>
       <aside className="hidden min-h-screen w-64 shrink-0 md:flex">
